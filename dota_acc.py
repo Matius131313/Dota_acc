@@ -9,6 +9,8 @@ headers = {
     "Accept": "*/*",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 "
 }
+account_id=""
+
 
 # program title using pyfiglet
 def title(text):
@@ -22,6 +24,7 @@ def separation(number):
 
 # getting account id, adding id to url, request to url with id
 def get_data(url, headers):
+    global account_id
     account_id = input("Please enter Dota 2 AccountID: ").strip()
     print("\n")
     url += account_id
@@ -47,8 +50,10 @@ def parse_data(req):
         return main_role, main_hero, main_hero_matches, main_hero_winrate
     except:
         print("No account data found")
-        preview_text = Figlet(font="bulbhead")
-        print(preview_text.renderText("404"))
+        preview_text = Figlet(font="bubble")
+        print(preview_text.renderText("ERROR"))
+        req = requests.get(url+account_id, headers=headers)
+        print(f"Response status: {req.status_code}")
         return 404
 
 # printing result on screen
